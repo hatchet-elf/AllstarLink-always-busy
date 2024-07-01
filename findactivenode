@@ -1,0 +1,69 @@
+#!/bin/bash
+
+#
+# Allstaralwaysbusy
+# Author
+# Eric Brown - vk3elf
+#
+
+counter=1
+
+# This variable holds the current most active Allstarnode over the last 10 minutes
+mostactivenode="unallocated" 
+
+# This variable is an array containing the dump of active nodes every 30 seconds
+allcurrentactivenodescompiled="" 
+
+# This string is all all the current nodes that have been logged with no new line characters
+allcurrentactivenodeswithnonewlines=""
+
+while [ true ]
+do
+	# Access the Allstar webside and download the page that details currently keyed nodes
+	# We then pipe that into grep and pull out all the lines that contact the word Bubble. The reason being is that these are the lines that contain the id of the keyed nodes
+	# We then use the cut command to remove everything but the node numbers
+
+	allcurrentactivenodescompiled[$counter]=$(curl -s http://stats.allstarlink.org/stats/keyed | 
+	cat | grep Bubble | 
+	cut -c 53-255 | 
+	cut -d '/' -f 1 )
+
+        counter=$(( $counter + 1 ))
+	
+	# We could change this line to change the number of copies of the nodes that we are looking through. 
+	# 20 is the default because we run this every 30 secons. This gives us the last 10 minutes of keyed nodes.
+
+        if [ $counter -gt 20 ]
+        then
+                counter=1
+        fi
+
+	# Here we are removing the new line characters from our array of keyed node numbers
+
+	allcurrentactivenodeswithnonewlines=$(echo ${allcurrentactivenodescompiled[@]} | tr -d '\n')
+
+	# We use Awk to return the most common number in the list of keyed nodes.
+
+	mostactivenode=($(echo $allcurrentactivenodeswithnonewlines | (awk '{ if (++words[$0] > max) { max = words[$0]; maxW=$0 } } END { print maxW }')))
+
+	# These are some debugging details that came in useful
+
+	#echo "all current nodes with no new lines"
+	#echo $allcurrentactivenodeswithnonewlines
+
+	#echo
+	#echo "counter"
+	#echo $counter
+	#echo
+	#echo "most active node"
+	# echo $mostactivenode
+
+	# And here we write the current most active node to a file that anyone can access
+	echo $mostactivenode > ./currentactiveallstarnode
+
+	# We sleep for 30 seconds. Combined with setting counter back to 1 when it reaches 20 we are identifying the most active node over the last 10 minutes
+
+	sleep 30
+done
+
+	

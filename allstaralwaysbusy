@@ -1,0 +1,9 @@
+#!/bin/bash
+
+curractnode=$(cat ./currentactiveallstarnode)
+
+asterisk -rx "rpt fun 56138 *76"
+
+sleep 3
+
+asterisk -rx "rpt fun 56138 *3$curractnode"
