@@ -31,7 +31,7 @@ do
         counter=$(( $counter + 1 ))
 	
 	# We could change this line to change the number of copies of the nodes that we are looking through. 
-	# 20 is the default because we run this every 30 secons. This gives us the last 10 minutes of keyed nodes.
+	# 20 is the default because we run this every 30 seconds. This gives us the last 10 minutes of keyed nodes.
 
         if [ $counter -gt 20 ]
         then
@@ -51,17 +51,18 @@ do
 	#echo "all current nodes with no new lines"
 	#echo $allcurrentactivenodeswithnonewlines
 
-	#echo
-	#echo "counter"
-	#echo $counter
-	#echo
-	#echo "most active node"
+	# debugging code below
+	# echo
+	# echo "counter"
+	# echo $counter
+	# echo
+	# echo "most active node"
 	# echo $mostactivenode
 
 	# And here we write the current most active node to a file that anyone can access
 	echo $mostactivenode > ./currentactiveallstarnode
 
-	# We sleep for 30 seconds. Combined with setting counter back to 1 when it reaches 20 we are identifying the most active node over the last 10 minutes
+	# Sleep for 30 seconds. Combined with setting counter back to 1 when it reaches 20 we are identifying the most active node over the last 10 minutes
 
 	sleep 30
 done
