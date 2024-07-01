@@ -2,8 +2,11 @@
 
 curractnode=$(cat ./currentactiveallstarnode)
 
+# Disconnect from all nodes
 asterisk -rx "rpt fun 56138 *76"
 
+# Wait 3 seconds
 sleep 3
 
+# Connect the most active node
 asterisk -rx "rpt fun 56138 *3$curractnode"
