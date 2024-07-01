@@ -12,8 +12,8 @@ There are two scripts.
 
 The first script is findactivenode
 * This script gets all the currently keyed nodes from : http://stats.allstarlink.org/stats/keyed
-* The list of nodes are compiled into a list. This list gets added to every 30 seconds.
-* After 10 minutes the list starts getting written over.
+* The currently keyed nodes are compiled into a list. This list gets added to every 30 seconds.
+* After 10 minutes the list starts getting overwritten.
 * The script organises the list in order starting with the nodes that have been keyed the most often.
 * The most keyed node is written to the file currentactiveallstarnode
 
@@ -39,16 +39,16 @@ Just a note however. Some nodes don't have any traffic. And some nodes simply wo
 
 ## Prerequisites
 
-You will need to have the installed. Curl is a terminal web browser. If you are running Ubuntu then you can download it from the Ubuntu app store. 
+You will need to have Curl installed. Curl is a terminal web browser. If you are running Ubuntu then you can download it from the Ubuntu app store. 
 Or, the below command will also install it:
 
 ```
-sudo apt install  curl
+sudo apt install curl
 ```
 
 ## Author
 
-* **hatchet-elf - ham radio operator vk3elf**
+* **hatchet-elf - vk3elf**
 * **https://github.com/hatchet-elf/Allstarlink-always-busy** 
 
 
